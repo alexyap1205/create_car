@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using combined.Repository;
@@ -43,9 +44,16 @@ namespace combined.Controllers
                 return BadRequest();
 
             var manager = _managerFactory.Create(vehicleType);
-            var vehicle = await manager.CreateAsync(attributes);
-            if (vehicle == null)
+            try
+            {
+                var vehicle = await manager.CreateAsync(attributes);
+                if (vehicle == null)
+                    return BadRequest();
+            }
+            catch (Exception ex)
+            {
                 return BadRequest();
+            }
             
             return Ok();
         }
