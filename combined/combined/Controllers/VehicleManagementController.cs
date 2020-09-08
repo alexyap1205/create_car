@@ -20,12 +20,12 @@ namespace combined.Controllers
             _vehicleTypeRegisters = vehicleTypeRegisters;
         }
 
-        [HttpPost]
-        [Route("create-vehicle")]
-        public async Task<IActionResult> CreateVehicleAsync([FromBody] Dictionary<string, string> attributes)
-        {
-            
-        }
+        // [HttpPost]
+        // [Route("create-vehicle")]
+        // public async Task<IActionResult> CreateVehicleAsync([FromBody] Dictionary<string, string> attributes)
+        // {
+        //     
+        // }
 
     }
 }
