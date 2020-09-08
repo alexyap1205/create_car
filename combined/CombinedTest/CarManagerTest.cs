@@ -15,7 +15,6 @@ namespace CombinedTest
         private CarManager _manager;
         private Vehicle _vehicle;
         private IVehicleRepository _repository;
-        private Action _action;
 
         [Fact]
         public async void TestAddNewCar()
