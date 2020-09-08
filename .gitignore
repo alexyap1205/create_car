@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+/combined/.idea/
+/combined/CombinedTest/obj/
+/combined/combined/ClientApp/.idea/
