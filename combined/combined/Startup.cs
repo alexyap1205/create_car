@@ -1,4 +1,5 @@
 using combined.Repository;
+using combined.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,6 +23,9 @@ namespace combined
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IVehicleTypeRegisters, StaticVehicleTypeRegisters>();
+            services.AddSingleton<IVehicleRepository, InMemoryVehicleRepository>();
+            services.AddScoped<IValidatorFactory, ValidatorFactory>();
+            services.AddScoped<IVehicleManagerFactory, VehicleManagerFactory>();
             
             services.AddControllersWithViews()
                 .AddJsonOptions(o =>

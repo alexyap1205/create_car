@@ -7,6 +7,7 @@ namespace combined.Repository
     
     public class VehiclePropertyConstants
     {
+        public const string VehicleType = "VehicleType";
         public const string Engine = "Engine";
         public const string Make = "Make";
         public const string Model = "Model";
