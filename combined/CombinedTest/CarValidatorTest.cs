@@ -18,7 +18,7 @@ namespace CombinedTest
         public void ValidCase()
         {
             this.Given(s => s.StaticTypeRegisterIsUsed())
-                .And(s => s.DoorsCountIsValid())
+                .When(s => s.DoorsCountIsValid())
                 .Then(s => s.ValidationSucceeds())
                 .BDDfy();
         }
@@ -27,7 +27,7 @@ namespace CombinedTest
         public void InvalidCase()
         {
             this.Given(s => s.StaticTypeRegisterIsUsed())
-                .And(s => s.DoorsCountIsInvalid())
+                .When(s => s.DoorsCountIsInvalid())
                 .Then(s => s.ValidationFails())
                 .BDDfy();
         }
