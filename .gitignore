@@ -107,3 +107,6 @@ dist
 /combined/combined/ClientApp/.idea/
 /combined/CombinedTest/bin/
 /combined/combined.sln.DotSettings.user
+/.idea/
+/CombinedTest/obj/
+/combined/ClientApp/.idea/
