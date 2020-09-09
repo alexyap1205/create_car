@@ -10,6 +10,8 @@
 * Schema is validated against a defined set of custom properties per types
 
 ## To run
+* Go to combined/ClientApp
+* execute npm install and npm run build
 * Go to combined project
 * execute dotnet run
 
