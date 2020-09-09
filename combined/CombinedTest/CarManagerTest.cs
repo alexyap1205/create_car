@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using combined.Models;
 using combined.Repository;
 using combined.Services;
+using Microsoft.Extensions.Logging;
+using Moq;
 using TestStack.BDDfy;
 using Xunit;
 
@@ -59,7 +61,8 @@ namespace CombinedTest
         
         private void RepositoryIsEmpty()
         {
-            _repository = new InMemoryVehicleRepository();
+            var loggerMock = new Mock<ILogger<InMemoryVehicleRepository>>();
+            _repository = new InMemoryVehicleRepository(loggerMock.Object);
             _manager = new CarManager(_repository, new StaticVehicleTypeRegisters());
         }
     }

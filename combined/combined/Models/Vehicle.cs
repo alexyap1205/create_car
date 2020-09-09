@@ -14,7 +14,7 @@ namespace combined.Models
 
         public Vehicle(VehicleType type, string make, string model)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             VehicleType = type;
             Make = make;
             Model = model;

@@ -1,26 +1,79 @@
 import React, { Component } from 'react';
+import axiosInstance from '../axios-instance';
+import Input from './UI/Input/Input';
+import VehicleProperties from './UI/VehicleProperties/VehicleProperties';
+
+import classes from '../custom.css';
 
 export class Home extends Component {
-  static displayName = Home.name;
+  constructor(props) {
+    super(props);
+    this.state = {
+      vehicleTypes: [],
+      selectedType: '',
+      propertyValues: {
+      }
+    };
+  }
+
+  componentDidMount() {
+    axiosInstance.get('/vehicletype')
+        .then(
+          res => {
+            const vehicleTypes = []
+            res.data.forEach(type => vehicleTypes.push(type));
+            this.setState({vehicleTypes: vehicleTypes})
+            console.log(this.state)
+          }
+        )
+        .catch(err => {
+          console.log(err)
+        });
+  }
+
+  selectionChangeHandler = (event) => {
+    console.log(event.target.value);
+    this.setState({selectedType: event.target.value}, () => {
+      console.log(this.state);
+    })
+  }
+
+  createHandler = (event) => {
+      event.preventDefault();
+      const data = {
+          VehicleType: this.state.selectedType,
+          ...this.state.propertyValues
+      }
+      axiosInstance.post('vehiclemanagement/create-vehicle', data)
+          .then(response => {
+              console.log('posted');
+          })
+          .catch(err => {
+              console.log(err);
+          })
+  }
+
+  propertyChangedHandler = (event, identifier) => {
+      const newPropertyValues = {...this.state.propertyValues};
+      newPropertyValues[identifier] = event.target.value;
+      this.setState({propertyValues: newPropertyValues}, () => {
+          console.log(this.state);
+      })
+  }
 
   render () {
     return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
+        <form onSubmit={this.createHandler}>
+          <Input inputtype="select" label="Types" vehicleTypes={this.state.vehicleTypes} selectionChangeHandler={this.selectionChangeHandler}/>
+          <VehicleProperties
+              selectedType={this.state.selectedType}
+              vehicleTypes={this.state.vehicleTypes}
+              propertyValues={this.state.propertyValues}
+              propertyChangedHandler={this.propertyChangedHandler}/>
+          <div>
+              <button className="btn-primary" disabled={this.state.selectedType === ''}>CREATE</button>
+          </div>
+        </form>
     );
   }
 }

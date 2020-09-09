@@ -11,4 +11,36 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.Input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.Label {
+  font-weight: bold;
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.InputElement {
+  outline: none;
+  border: 1px solid #ccc;
+  background-color: white;
+  font: inherit;
+  padding: 6px 10px;
+  display: block;
+  width: 100%;
+}
+
+.InputElement:focus {
+  outline: none;
+  background-color: #ccc;
 }
