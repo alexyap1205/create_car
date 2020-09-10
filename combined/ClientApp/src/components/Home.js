@@ -3,7 +3,13 @@ import axiosInstance from '../axios-instance';
 import Input from './UI/Input/Input';
 import VehicleProperties from './UI/VehicleProperties/VehicleProperties';
 
-import classes from '../custom.css';
+import Button from 'react-bootstrap/Button'
+import Container from "react-bootstrap/Container";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+import Form from 'react-bootstrap/Form'
+import Alert from 'react-bootstrap/Alert'
 
 export class Home extends Component {
   constructor(props) {
@@ -12,7 +18,9 @@ export class Home extends Component {
       vehicleTypes: [],
       selectedType: '',
       propertyValues: {
-      }
+      },
+      alertMessage: '',
+      alertType: ''
     };
   }
 
@@ -46,10 +54,17 @@ export class Home extends Component {
       }
       axiosInstance.post('vehiclemanagement/create-vehicle', data)
           .then(response => {
-              console.log('posted');
+              this.setState({
+                  alertMessage: 'Success',
+                  alertType: 'success'
+              })
           })
           .catch(err => {
               console.log(err);
+              this.setState({
+                  alertMessage: 'Failed',
+                  alertType: 'danger'
+              })
           })
   }
 
@@ -63,17 +78,31 @@ export class Home extends Component {
 
   render () {
     return (
-        <form onSubmit={this.createHandler}>
-          <Input inputtype="select" label="Types" vehicleTypes={this.state.vehicleTypes} selectionChangeHandler={this.selectionChangeHandler}/>
-          <VehicleProperties
-              selectedType={this.state.selectedType}
-              vehicleTypes={this.state.vehicleTypes}
-              propertyValues={this.state.propertyValues}
-              propertyChangedHandler={this.propertyChangedHandler}/>
-          <div>
-              <button className="btn-primary" disabled={this.state.selectedType === ''}>CREATE</button>
-          </div>
-        </form>
+        <Container fluid="md">
+            <Row>
+                <Col>
+                    <Form onSubmit={this.createHandler}>
+                        <Input inputtype="select" label="Types" vehicleTypes={this.state.vehicleTypes} selectionChangeHandler={this.selectionChangeHandler}/>
+                        <VehicleProperties
+                            selectedType={this.state.selectedType}
+                            vehicleTypes={this.state.vehicleTypes}
+                            propertyValues={this.state.propertyValues}
+                            propertyChangedHandler={this.propertyChangedHandler}/>
+                        <Button variant="primary" type="submit" disabled={this.state.selectedType === ''}>
+                            Create
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <p/>
+                    <Alert variant={this.state.alertType}>
+                        {this.state.alertMessage}
+                    </Alert>
+                </Col>
+            </Row>
+        </Container>
     );
   }
 }

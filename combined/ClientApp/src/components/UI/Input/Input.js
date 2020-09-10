@@ -1,39 +1,45 @@
 import React from 'react';
 
-import classes from '../../../custom.css';
+import Form from 'react-bootstrap/Form'
 
 const input = (props) => {
     let inputElement = null;
 
     switch (props.inputtype) {
         case ('input'):
-            inputElement = <input
-                className="InputElement"
-                value={props.value}
-                onChange={(event) => props.inputChangeHandler(event, props.identifier)}
-                {...props}/>
+            inputElement = (
+                <Form.Control as="input"
+                              value={props.value}
+                              onChange={(event) => props.inputChangeHandler(event, props.identifier)}
+                              placeholder={props.label}
+                              {...props}>
+                </Form.Control>
+            )
             break;
         case ('select'):
             const options = ['']
             props.vehicleTypes.forEach(type => options.push(type.name));
 
-            inputElement = <select className="InputElement" value={props.value} onChange={(event) => props.selectionChangeHandler(event)}>
-                {
-                    options.map(option => (
-                        <option key={option} value={option}>{option}</option>
-                    ))
-                }
-            </select>
+            inputElement = (
+                <Form.Control as="select" placeholder={props.label} value={props.value} onChange={(event) => props.selectionChangeHandler(event)}>
+                    {
+                        options.map(option => (
+                            <option key={option}>{option}</option>
+                        ))
+                    }
+                </Form.Control>
+
+            );
             break;
         default:
             inputElement = <input className="InputElement" {...props}/>
     }
 
     return (
-        <div className={classes.Input}>
-            <label className={classes.Label}>{props.label}</label>
+        <Form.Group controlId={props.label}>
+            <Form.Label>{props.label}</Form.Label>
             {inputElement}
-        </div>
+        </Form.Group>
         );
 };
 
